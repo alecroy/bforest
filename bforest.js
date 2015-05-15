@@ -49,17 +49,17 @@ BForest.prototype.cons = function(element) {
 };
 
 function iterTree(fn, tree) {
-  if (tree.left === null) { // Leaf
+  if (tree.left === null) { // Leaf, call the function
     fn(tree.value);
   } else {
-    iterTree(fn, tree.left);
+    iterTree(fn, tree.left); // Left, then right
     iterTree(fn, tree.right);
   }
 }
 
 BForest.prototype.iter = function(fn) {
   for (var i = 0; i < this.trees.length; i++) {
-    iterTree(fn, this.trees[i]); // TODO eliminate iterTree(..)
+    iterTree(fn, this.trees[i]);
   }
 };
 
@@ -127,15 +127,15 @@ BForest.prototype.index = function(index) {
 function updateTree(tree, index, value) {
   if (tree.size === 1) {
     return {size: 1, left: null, right: null, value: value};
-  } else {
-    var newTree = {size: tree.size, left: tree.left, right: tree.right};
-    if (index < tree.left.size) {
-      newTree.left = updateTree(tree.left, index, value);
-    } else {
-      newTree.right = updateTree(tree.right, index - tree.right.size, value);
-    }
-    return newTree;
   }
+
+  var newTree = {size: tree.size, left: tree.left, right: tree.right};
+  if (index < tree.left.size) {
+    newTree.left = updateTree(tree.left, index, value);
+  } else {
+    newTree.right = updateTree(tree.right, index - tree.right.size, value);
+  }
+  return newTree;
 }
 
 BForest.prototype.update = function(index, value) {
