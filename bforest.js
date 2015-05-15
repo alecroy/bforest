@@ -87,7 +87,7 @@ BForest.prototype.map = function(fn) {
 };
 
 BForest.prototype.tail = function() {
-  if (this.isEmpty()) { return null; }
+  if (this.isEmpty()) { return this; }
 
   var bf = new BForest();
   if (this.trees[0].size > 1) { // Need to break apart first tree
