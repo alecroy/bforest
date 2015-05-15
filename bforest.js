@@ -16,7 +16,7 @@ BForest.prototype.prepend = function(array) {
 };
 
 BForest.prototype.isEmpty = function() {
-  return (this.length === 0);
+  return (this.trees.length === 0);
 };
 
 function first(tree) { // TODO eliminate node variable
