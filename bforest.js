@@ -22,19 +22,15 @@ BForest.prototype.isEmpty = function() {
   return (this.trees.length === 0);
 };
 
-function first(tree) { // TODO eliminate node variable
-  var node = tree;
-  while (node.left !== null) {
-    node = node.left;
-  }
-  return node.value;
-}
-
 BForest.prototype.head = function() { // TODO empty && return .. ; ..
   if (this.isEmpty()) {
     return null;
   } else {
-    return first(this.trees[0]); // TODO eliminate first(..)
+    var ptr = this.trees[0];
+    while (ptr.left !== null) {
+      ptr = ptr.left; // Go all the way left
+    }
+    return ptr.value;
   }
 };
 
