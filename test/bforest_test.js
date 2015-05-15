@@ -68,6 +68,19 @@ describe('the BForest data structure', function() {
       oneTwoThree.iter(function(elt) { array.push(elt); });
       expect(array).to.eql([1, 2, 3]);
     });
+
+    it('iterating over a BForest does not replace the BForest', function() {
+      var numbers = new BForest().prepend([1, 2, 3, 4]);
+      numbers.iter(function(x) { return x * x; });
+      expect(numbers.toString()).to.equal('[1, 2, 3, 4]');
+    });
+
+
+    it('iterating over a BForest can change its elements', function() {
+      var oneTwoThree = new BForest().prepend([[1], [2], [3]]);
+      oneTwoThree.iter(function(elt) { elt[0] += 100; });
+      expect(oneTwoThree.toString()).to.eql('[101, 102, 103]');
+    });
   });
 
   describe('can be mapped over just like a list', function() {
@@ -77,12 +90,24 @@ describe('the BForest data structure', function() {
       expect(squares.toString()).to.equal('[1, 4, 9, 16]');
     });
 
-    it('mapping over a list does not change the list', function() {
+    it('mapping over a BForest does not replace the BForest', function() {
       var numbers = new BForest().prepend([1, 2, 3, 4]);
       numbers.map(function(x) { return x * x; });
       expect(numbers.toString()).to.equal('[1, 2, 3, 4]');
     });
+
+    it('mapping over a BForest can change its elements', function() {
+      var oneTwoThree = new BForest().prepend([[1], [2], [3]]);
+      oneTwoThree.map(function(elt) { elt[0] += 100; });
+      expect(oneTwoThree.toString()).to.eql('[101, 102, 103]');
+    });
   });
 
+  describe('can be indexed just like a list', function() {
+    // TODO write tests
+  });
 
+  describe('can be updated just like a list', function() {
+    // TODO write tests
+  });
 });
