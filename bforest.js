@@ -1,6 +1,6 @@
 'use strict';
 
-var BForest = function() {
+var BForest = function() { // TODO take an array, prepend?
   this.trees = [];
 };
 
@@ -106,7 +106,7 @@ BForest.prototype.tail = function() {
 };
 
 BForest.prototype.index = function(index) {
-  if (this.isEmpty()) { return null; }
+  if (this.isEmpty() || !Number.isInteger(index) || index < 0) { return null; }
 
   for (var i = 0; i < this.trees.length; i++) {
     if (index < this.trees[i].size) { // It's in this tree
