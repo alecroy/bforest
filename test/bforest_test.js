@@ -39,5 +39,19 @@ describe('the BForest data structure', function() {
     it('the tail of [1, 2, 3] should be [2, 3]', function() {
       expect(oneTwoThree.tail().toString()).to.equal('[2, 3]');
     });
+
+    it('the head of the tail of [1, 2, 3] should be 2', function() {
+      expect(oneTwoThree.tail().head()).to.equal(2);
+    });
+  });
+
+  describe('conses just like a list', function() {
+    it('1 cons [] should be [1]', function() {
+      expect(new BForest().cons(1).toString()).to.equal('[1]');
+    });
+
+    it('1 cons 2 cons [] should be [1, 2]', function() {
+      expect(new BForest().cons(2).cons(1).toString()).to.equal('[1, 2]');
+    });
   });
 });
