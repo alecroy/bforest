@@ -53,5 +53,28 @@ describe('the BForest data structure', function() {
     it('1 cons 2 cons [] should be [1, 2]', function() {
       expect(new BForest().cons(2).cons(1).toString()).to.equal('[1, 2]');
     });
+
+    it('1 cons [2, 3, 4, 5] should be [1, 2, 3, 4, 5]', function() {
+      var twoThreeFourFive = new BForest().prepend([2, 3, 4, 5]);
+      expect(twoThreeFourFive.cons(1).toString()).to.equal('[1, 2, 3, 4, 5]');
+    });
+  });
+
+  describe('can be iterated over just like a list', function() {
+    it('should push [1, 2, 3] onto an empty array in 1 2 3 order', function() {
+      var array = [];
+      var oneTwoThree = new BForest().prepend([1, 2, 3]);
+
+      oneTwoThree.iter(function(elt) { array.push(elt); });
+      expect(array).to.eql([1, 2, 3]);
+    });
+  });
+
+  describe('can be mapped over just like a list', function() {
+    it('mapping x -> x*x over [1, 2, 3, 4] gives [1, 4, 9, 16]', function() {
+      var numbers = new BForest().prepend([1, 2, 3, 4]);
+      var squares = numbers.map(function(x) { return x * x; });
+      expect(squares.toString()).to.equal('[1, 4, 9, 16]');
+    });
   });
 });
