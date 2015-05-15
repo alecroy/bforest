@@ -76,5 +76,13 @@ describe('the BForest data structure', function() {
       var squares = numbers.map(function(x) { return x * x; });
       expect(squares.toString()).to.equal('[1, 4, 9, 16]');
     });
+
+    it('mapping over a list does not change the list', function() {
+      var numbers = new BForest().prepend([1, 2, 3, 4]);
+      numbers.map(function(x) { return x * x; });
+      expect(numbers.toString()).to.equal('[1, 2, 3, 4]');
+    });
   });
+
+
 });
