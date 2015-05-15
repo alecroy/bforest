@@ -22,16 +22,14 @@ BForest.prototype.isEmpty = function() {
   return (this.trees.length === 0);
 };
 
-BForest.prototype.head = function() { // TODO empty && return .. ; ..
-  if (this.isEmpty()) {
-    return null;
-  } else {
-    var ptr = this.trees[0];
-    while (ptr.left !== null) {
-      ptr = ptr.left; // Go all the way left
-    }
-    return ptr.value;
+BForest.prototype.head = function() {
+  if (this.isEmpty()) { return null; }
+
+  var ptr = this.trees[0];
+  while (ptr.left !== null) {
+    ptr = ptr.left; // Go all the way left
   }
+  return ptr.value;
 };
 
 BForest.prototype.cons = function(element) {
