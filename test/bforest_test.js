@@ -6,9 +6,17 @@ var expect = require('chai').expect;
 expect(BForest).to.not.equal(null);
 
 describe('the BForest data structure', function() {
-  describe('constructs empty forests', function() {
+  describe('constructs forests', function() {
     it('a new BForest is empty', function() {
       expect(new BForest().isEmpty()).to.be.true;
+    });
+
+    it('a new BForest([]) is empty', function() {
+      expect(new BForest([]).isEmpty()).to.be.true;
+    });
+
+    it('a new BForest([1, 2, 3]) is not empty', function() {
+      expect(new BForest([1, 2, 3]).isEmpty()).to.be.false;
     });
 
     it('empty.head() is null', function() {
@@ -24,26 +32,43 @@ describe('the BForest data structure', function() {
     });
   });
 
-  describe('prints just like a list', function() {
-    it('empty is \'[]\'', function() {
-      expect(new BForest().toString()).to.equal('[]');
+  describe('can be prepended like a list', function() {
+    it('empty.prepend([1, 2, 3]) is BForest([1, 2, 3])', function() {
+      var initialized = new BForest([1, 2, 3]);
+      var prepended = new BForest().prepend([1, 2, 3]);
+      expect(initialized).to.eql(prepended);
     });
+  });
 
+  describe('has a head & tail just like a list', function() {
     var oneTwoThree = new BForest().prepend([1, 2, 3]);
-    it('prepending [1, 2, 3] to [] makes \'[1, 2, 3]\'', function() {
-      expect(oneTwoThree.toString()).to.equal('[1, 2, 3]');
-    });
 
     it('the head of [1, 2, 3] is 1', function() {
       expect(oneTwoThree.head()).to.equal(1);
     });
 
-    it('the tail of [1, 2, 3] is \'[2, 3]\'', function() {
-      expect(oneTwoThree.tail().toString()).to.equal('[2, 3]');
+    it('the tail of [1, 2, 3] is [2, 3]', function() {
+      expect(oneTwoThree.tail()).to.eql(new BForest([2, 3]));
     });
 
     it('the head of the tail of [1, 2, 3] is 2', function() {
       expect(oneTwoThree.tail().head()).to.equal(2);
+    });
+  });
+
+  describe('prints just like a list', function() {
+    var oneTwoThree = new BForest().prepend([1, 2, 3]);
+
+    it('empty is \'[]\'', function() {
+      expect(new BForest().toString()).to.equal('[]');
+    });
+
+    it('[1, 2, 3] prints as \'[1, 2, 3]\'', function() {
+      expect(oneTwoThree.toString()).to.equal('[1, 2, 3]');
+    });
+
+    it('the tail of [1, 2, 3] is \'[2, 3]\'', function() {
+      expect(oneTwoThree.tail().toString()).to.equal('[2, 3]');
     });
   });
 
@@ -106,42 +131,42 @@ describe('the BForest data structure', function() {
   });
 
   describe('can be indexed just like a list', function() {
-    it('[1,2,3][0] is 1,  [1,2,3][1] is 2,  [1,2,3][2] is 3', function() {
+    it('[1, 2, 3][0] is 1, [1, 2, 3][1] is 2, [1, 2, 3][2] is 3', function() {
       var oneTwoThree = new BForest().prepend([1, 2, 3]);
       expect(oneTwoThree.index(0)).to.equal(1);
       expect(oneTwoThree.index(1)).to.equal(2);
       expect(oneTwoThree.index(2)).to.equal(3);
     });
 
-    it('[1,2,3][999] is null', function() {
+    it('[1, 2, 3][999] is null', function() {
       expect(new BForest().prepend([1, 2, 3]).index(999)).to.be.null;
     });
 
-    it('[1,2,3][-1] is null', function() {
+    it('[1, 2, 3][-1] is null', function() {
       expect(new BForest().prepend([1, 2, 3]).index(-1)).to.be.null;
     });
 
-    it('[1,2,3][undefined] is null', function() {
+    it('[1, 2, 3][undefined] is null', function() {
       expect(new BForest().prepend([1, 2, 3]).index(undefined)).to.be.null;
     });
 
-    it('[1,2,3][null] is null', function() {
+    it('[1, 2, 3][null] is null', function() {
       expect(new BForest().prepend([1, 2, 3]).index(null)).to.be.null;
     });
 
-    it('[1,2,3][NaN] is null', function() {
+    it('[1, 2, 3][NaN] is null', function() {
       expect(new BForest().prepend([1, 2, 3]).index(NaN)).to.be.null;
     });
   });
 
   describe('can be updated non-destructively like a list', function() {
-    it('[1,2,3][1] = \'foo\' makes [1, foo, 3]', function() {
+    it('[1, 2, 3][1] = \'foo\' makes [1, foo, 3]', function() {
       var oneTwoThree = new BForest().prepend([1, 2, 3]);
       var oneFooThree = oneTwoThree.update(1, 'foo');
       expect(oneFooThree.toString()).to.equal('[1, foo, 3]');
     });
 
-    it('[1,2,3][1] = \'foo\' does not modify [1,2,3]', function() {
+    it('[1, 2, 3][1] = \'foo\' does not modify [1, 2, 3]', function() {
       var oneTwoThree = new BForest().prepend([1, 2, 3]);
       oneTwoThree.update(1, 'foo');
       expect(oneTwoThree.toString()).to.equal('[1, 2, 3]');

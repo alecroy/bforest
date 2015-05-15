@@ -1,7 +1,10 @@
 'use strict';
 
-var BForest = function() { // TODO take an array, prepend?
+var BForest = function(array) {
   this.trees = [];
+  if (array !== undefined) {
+    this.trees = this.prepend(array).trees;
+  }
 };
 
 BForest.prototype.prepend = function(array) {
