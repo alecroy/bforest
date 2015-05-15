@@ -1,0 +1,27 @@
+{
+  "name": "bforest",
+  "version": "0.0.1",
+  "description": "A binary random access list class based on C. Okasaki's book.",
+  "main": "bforest.js",
+  "scripts": {
+    "test": "grunt test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alecroy/bforest.git"
+  },
+  "keywords": [
+    "random",
+    "access",
+    "list",
+    "data",
+    "structure",
+    "okasaki"
+  ],
+  "author": "Alec Hollingsworth",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/alecroy/bforest/issues"
+  },
+  "homepage": "https://github.com/alecroy/bforest#readme"
+}
