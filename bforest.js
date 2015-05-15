@@ -2,7 +2,7 @@
 
 var BForest = function() {
   this.trees = [];
-}
+};
 
 BForest.prototype.prepend = function(array) {
   if (array === undefined) {
@@ -84,7 +84,7 @@ BForest.prototype.map = function(fn) {
   }
 
   return bf;
-}
+};
 
 BForest.prototype.tail = function() {
   if (this.isEmpty()) { return null; }
@@ -103,7 +103,7 @@ BForest.prototype.tail = function() {
 
   bf.trees = bf.trees.concat(this.trees.slice(1)); // Keep old trees
   return bf;
-}
+};
 
 BForest.prototype.index = function(index) {
   if (this.isEmpty()) { return null; }
@@ -112,14 +112,14 @@ BForest.prototype.index = function(index) {
     if (index < this.trees[i].size) { // It's in this tree
       var ptr = this.trees[i];
       while (ptr.left !== null) {
-        if (index < ptr.left.size) { // index < 2^n
+        if (index < ptr.left.size) { // 0 <= index < 2^n
           ptr = ptr.left; // [0..2^n] -> [0..2^(n-1)]
         } else {
           index -= ptr.left.size; // [0..2^n] -> [2^(n-1)..2^n] - 2^(n-1)
           ptr = ptr.right;
         }
       }
-      return ptr.value; // ptr.left is null, we must be at a leaf
+      return ptr.value; // We must be at the leaf [i] if ptr.left is null
     } else { // It's in a later tree, subtract from index # skipped
       index -= this.trees[i].size;
     }
@@ -163,6 +163,6 @@ BForest.prototype.toString = function() {
   var strings = [];
   this.iter(function(elt) { strings.push(elt.toString()); });
   return '[' + strings.join(', ') + ']';
-}
+};
 
 module.exports = BForest;
