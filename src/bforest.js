@@ -13,8 +13,9 @@ function mapTree(fn, tree) {
     if (tree.size === 1) {
         return {size: 1, value: fn(tree.value), left: null, right: null}
     } else {
-        var newLeft = mapTree(fn, tree.left)
-        var newRight = mapTree(fn, tree.right)
+        let newLeft = mapTree(fn, tree.left)
+        let newRight = mapTree(fn, tree.right)
+
         return {size: tree.size, left: newLeft, right: newRight}
     }
 }
@@ -24,12 +25,13 @@ function updateTree(tree, index, value) {
         return {size: 1, left: null, right: null, value: value}
     }
 
-    var newTree = {size: tree.size, left: tree.left, right: tree.right}
+    let newTree = {size: tree.size, left: tree.left, right: tree.right}
     if (index < tree.left.size) {
         newTree.left = updateTree(tree.left, index, value)
     } else {
         newTree.right = updateTree(tree.right, index - tree.right.size, value)
     }
+
     return newTree
 }
 
@@ -46,8 +48,8 @@ class BForest {
             return this
         }
 
-        var bf = this
-        for (var i = array.length - 1; i >= 0; i--) {
+        let bf = this
+        for (let i = array.length - 1; i >= 0; i--) {
             bf = bf.cons(array[i])
         }
 
@@ -63,7 +65,7 @@ class BForest {
             return null
         }
 
-        var ptr = this.trees[0]
+        let ptr = this.trees[0]
         while (ptr.left !== null) {
             ptr = ptr.left // Go all the way left
         }
@@ -72,10 +74,10 @@ class BForest {
     }
 
     cons(element) {
-        var bf = new BForest()
-        var newTree = { size: 1, value: element, left: null, right: null}
+        let bf = new BForest()
+        let newTree = { size: 1, value: element, left: null, right: null}
 
-        for (var i = 0; i < this.trees.length; i++) {
+        for (let i = 0; i < this.trees.length; i++) {
             if (this.trees[i].size > newTree.size) {
                 bf.trees = [newTree].concat(this.trees.slice(i))
                 return bf;
@@ -88,15 +90,15 @@ class BForest {
     }
 
     iter(fn) {
-        for (var i = 0; i < this.trees.length; i++) {
+        for (let i = 0; i < this.trees.length; i++) {
             iterTree(fn, this.trees[i])
         }
     }
 
     map(fn) {
-        var bf = new BForest()
+        let bf = new BForest()
 
-        for (var i = 0; i < this.trees.length; i++) {
+        for (let i = 0; i < this.trees.length; i++) {
             bf.trees.push(mapTree(fn, this.trees[i]))
         }
 
@@ -108,9 +110,9 @@ class BForest {
             return this
         }
 
-        var bf = new BForest()
+        let bf = new BForest()
         if (this.trees[0].size > 1) { // Need to break apart first tree
-            var ptr = this.trees[0]
+            let ptr = this.trees[0]
 
             while (ptr !== null && ptr.right !== null) {
                 bf.trees.push(ptr.right) // Collect the trees on the right
@@ -129,9 +131,9 @@ class BForest {
             return null
         }
 
-        for (var i = 0; i < this.trees.length; i++) {
+        for (let i = 0; i < this.trees.length; i++) {
             if (index < this.trees[i].size) { // It's in this tree
-                var ptr = this.trees[i]
+                let ptr = this.trees[i]
                 while (ptr.left !== null) {
                     if (index < ptr.left.size) { // 0 <= index < 2^n
                         ptr = ptr.left // [0..2^n] -> [0..2^(n-1)]
@@ -151,13 +153,13 @@ class BForest {
     update(index, value) {
         if (this.isEmpty()) { return null }
 
-        for (var i = 0; i < this.trees.length; i++) {
+        for (let i = 0; i < this.trees.length; i++) {
             if (index >= this.trees[i].size) { // It's in a later tree
                 index -= this.trees[i].size // Subtract from index # skipped
                 continue
             }
 
-            var bf = new BForest()
+            let bf = new BForest()
             bf.trees = this.trees.slice(0, i) // Collect all trees before
             bf.trees.push(updateTree(this.trees[i], index, value))
             bf.trees = bf.trees.concat(this.trees.slice(i + 1)) // And after
@@ -167,7 +169,7 @@ class BForest {
     }
 
     toString() {
-        var strings = []
+        let strings = []
         this.iter(function(elt) { strings.push(elt.toString()) })
         return '[' + strings.join(', ') + ']'
     }
