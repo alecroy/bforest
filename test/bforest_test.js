@@ -1,6 +1,6 @@
 'use strict';
 
-var BForest = require('../bforest');
+var BForest = require('../lib/bforest');
 var expect = require('chai').expect;
 
 expect(BForest).to.not.equal(null);

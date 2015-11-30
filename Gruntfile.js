@@ -2,6 +2,17 @@
 
 module.exports = function(grunt) {
   grunt.initConfig({
+    babel: {
+      options: {
+        sourceMap: true,
+        presets: ['babel-preset-es2015'],
+      },
+      dist: {
+        files: {
+          'lib/bforest.js': 'src/bforest.js',
+        },
+      },
+    },
     jshint: {
       all: {
         src: ['./*.js', './test/**/*_test.js'],
@@ -37,13 +48,15 @@ module.exports = function(grunt) {
     },
   });
 
+  grunt.loadNpmTasks('grunt-babel');
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-simple-mocha');
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-jscs');
 
-  grunt.registerTask('test', 'simplemocha');
+  grunt.registerTask('build', 'babel');
   grunt.registerTask('lint', ['jshint', 'jscs']);
+  grunt.registerTask('test', ['lint', 'simplemocha']);
 
-  grunt.registerTask('default', ['lint', 'test']);
+  grunt.registerTask('default', ['build', 'test']);
 };

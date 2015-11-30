@@ -33,7 +33,7 @@ function updateTree(tree, index, value) {
     return newTree
 }
 
-export default class BForest {
+class BForest {
     constructor(array) {
         this.trees = []
         if (array !== undefined) {
@@ -173,3 +173,4 @@ export default class BForest {
     }
 }
 
+module.exports = BForest
